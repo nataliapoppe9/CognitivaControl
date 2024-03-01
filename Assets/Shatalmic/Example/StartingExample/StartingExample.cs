@@ -87,6 +87,8 @@ public class StartingExample : MonoBehaviour
 
     private void ProcessButton(byte[] bytes)
     {
+        StatusMessage = "Buton 1: " + bytes[0] +" , Button 2: " + bytes[1];
+
         if (bytes[0] == 0x00)
             ButtonPositionText.text = "Not Pushed ";
         else
