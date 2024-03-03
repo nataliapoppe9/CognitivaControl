@@ -13,7 +13,7 @@ public class StartingExample : MonoBehaviour
     public string DeviceName = "MESA_COGNITIVA";
     public string ServiceUUID = "A9E90000-194C-4523-A473-5FDF36AA4D20";
     public string ButtonUUID = "A9E90002-194C-4523-A473-5FDF36AA4D20";
-
+    
     enum States
     {
         None,
@@ -37,6 +37,7 @@ public class StartingExample : MonoBehaviour
 
     public Text StatusText;
     public Text ButtonPositionText;
+    public Text ButtonPositionText2;
 
     private string StatusMessage
     {
@@ -55,6 +56,7 @@ public class StartingExample : MonoBehaviour
         _deviceAddress = null;
         _foundButtonUUID = false;
         
+
         _rssi = 0;
     }
 
@@ -87,13 +89,18 @@ public class StartingExample : MonoBehaviour
 
     private void ProcessButton(byte[] bytes)
     {
-        StatusMessage = "Buton 1: " + bytes[0] +" , Button 2: " + bytes[1];
 
         if (bytes[0] == 0x00)
-            ButtonPositionText.text = "Not Pushed ";
-        else
-            ButtonPositionText.text = "Pushed";
+            ButtonPositionText.text = "Not Pushed But1: " + bytes[0] ;
+        else if(bytes[0] == 0x01)
+            ButtonPositionText.text = "Pushed But1: " + bytes[0] ;
+        if (bytes[1] == 0x00)
+            ButtonPositionText2.text = "Not ushed But2: " + bytes[1];
+        else if (bytes[1] == 0x01)
+            ButtonPositionText2.text = "Pushed But2: " + bytes[1];
+
     }
+
 
     // Update is called once per frame
     void Update()
@@ -123,7 +130,7 @@ public class StartingExample : MonoBehaviour
                             {
                                 if (name.Contains(DeviceName))
                                 {
-                                    StatusMessage = "Found " + name;
+                                    StatusMessage = "1.Found " + name;
 
                                     // found a device with the name we want
                                     // this example does not deal with finding more than one
@@ -139,7 +146,7 @@ public class StartingExample : MonoBehaviour
 
                             if (name.Contains(DeviceName))
                             {
-                                StatusMessage = "Found " + name;
+                                StatusMessage = "2.Found " + name;
 
                                 if (_rssiOnly)
                                 {
@@ -176,6 +183,7 @@ public class StartingExample : MonoBehaviour
                             StatusMessage = "process button";
                         });
 
+                      
                         SetState(States.ReadRSSI, 2f);
                         break;
 
@@ -184,6 +192,7 @@ public class StartingExample : MonoBehaviour
 
                         // set these flags
                         _foundButtonUUID = false;
+                       
                         //_foundLedUUID = false;
 
                         // note that the first parameter is the address, not the name. I have not fixed this because
@@ -202,20 +211,23 @@ public class StartingExample : MonoBehaviour
                                 StatusMessage = "Found Service UUID";
 
                                 _foundButtonUUID = _foundButtonUUID || IsEqual(characteristicUUID, ButtonUUID);
-                                //_foundLedUUID = _foundLedUUID || IsEqual(characteristicUUID, LedUUID);
+                               
+
 
                                 // if we have found both characteristics that we are waiting for
                                 // set the state. make sure there is enough timeout that if the
                                 // device is still enumerating other characteristics it finishes
                                 // before we try to subscribe
-                                if (_foundButtonUUID)
-                                {
-                                    _connected = true;
-                                    SetState(States.RequestMTU, 2f);
-                                    StatusMessage = "Connected! RequestMTU";
-                                }
+
+                                    if (_foundButtonUUID)
+                                     {
+                                         _connected = true;
+                                         SetState(States.RequestMTU, 4f);
+                                         StatusMessage = "Connected";
+                                     }
                             }
                         });
+
                         break;
 
                     case States.RequestMTU:
@@ -259,13 +271,14 @@ public class StartingExample : MonoBehaviour
                                 StatusMessage = "Waiting for user action (2)...";
 
                                 SetState(States.ReadRSSI, 1f);
-                                StatusMessage = "no process button ";
                             }
 
                             // we received some data from the device
                             ProcessButton(bytes);
-                            StatusMessage = " process button 2";
+                            StatusMessage = " Recieved Data";
                         });
+
+                       
                         break;
 
                     case States.Unsubscribe:
