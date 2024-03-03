@@ -37,7 +37,13 @@ public class StartingExample : MonoBehaviour
 
     public Text StatusText;
     public Text ButtonPositionText;
+    public Text ButtonPositionText1;
     public Text ButtonPositionText2;
+    public Text ButtonPositionText3;
+    public Text ButtonPositionText4;
+    public Text ButtonPositionText5;
+    public Text ButtonPositionText6;
+
 
     private string StatusMessage
     {
@@ -91,13 +97,37 @@ public class StartingExample : MonoBehaviour
     {
 
         if (bytes[0] == 0x00)
-            ButtonPositionText.text = "Not Pushed But1: " + bytes[0] ;
+            ButtonPositionText.text = "But1: OFF " + bytes[0] ;
         else if(bytes[0] == 0x01)
-            ButtonPositionText.text = "Pushed But1: " + bytes[0] ;
+            ButtonPositionText.text = "But1: ON " + bytes[0] ;
         if (bytes[1] == 0x00)
-            ButtonPositionText2.text = "Not ushed But2: " + bytes[1];
+            ButtonPositionText1.text = "But2: OFF " + bytes[1];
         else if (bytes[1] == 0x01)
-            ButtonPositionText2.text = "Pushed But2: " + bytes[1];
+            ButtonPositionText1.text = "But2: ON " + bytes[1];
+        if (bytes[2] == 0x00)
+            ButtonPositionText2.text = "But3: OFF " + bytes[2];
+        else if (bytes[2] == 0x01)
+            ButtonPositionText2.text = "But3: ON " + bytes[2];
+
+        if (bytes[3] == 0x00)
+            ButtonPositionText3.text = "But4: OFF " + bytes[3];
+        else if (bytes[3] == 0x01)
+            ButtonPositionText3.text = "But4: ON " + bytes[3];
+        if (bytes[4] == 0x00)
+            ButtonPositionText4.text = "But5: OFF " + bytes[4];
+        else if (bytes[4] == 0x01)
+            ButtonPositionText4.text = "But5: ON " + bytes[4];
+        if (bytes[5] == 0x00)
+        {
+            ButtonPositionText5.text = "But6: OFF " + bytes[5];
+            ButtonPositionText6.text = "But6: OFF " + bytes[5];
+        }
+        else if (bytes[5] == 0x01)
+        {
+            ButtonPositionText5.text = "But6: ON " + bytes[5];
+            ButtonPositionText6.text = "But6: ON " + bytes[5];
+        }
+            
 
     }
 
