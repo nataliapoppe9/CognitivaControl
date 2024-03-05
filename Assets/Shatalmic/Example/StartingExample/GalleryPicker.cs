@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public class GalleryPicker : MonoBehaviour
         GetInput();
     }
 
-    public void PickImage(int maxSize)
+    public void PickImage(int maxSize, string imagen)
     {
         Debug.Log(this.name);
         if (NativeGallery.IsMediaPickerBusy())
@@ -56,6 +57,16 @@ public class GalleryPicker : MonoBehaviour
                         return;
                     }
                     mySprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+
+                    foreach (GameObject myGameObject in lista)
+                    {
+                        if (imagen == myGameObject.name)
+                        {
+                            myGameObject.GetComponent<Image>().sprite = mySprite;
+                        }
+                    }
+
+                    
                     //	chosen = true;
                 }
             });
@@ -124,9 +135,9 @@ public class GalleryPicker : MonoBehaviour
             }
             else if (hit.collider != null && !continuar)
             {
-
-                PickImage(512);
-                hit.transform.GetComponent<Image>().sprite = mySprite;
+  
+                PickImage(512, hit.transform.name);
+                Debug.Log(hit.transform.name);
             }
             else if (hit.collider != null && continuar && !ctrl)
             {
