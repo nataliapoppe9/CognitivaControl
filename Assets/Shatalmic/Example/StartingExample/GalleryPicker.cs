@@ -11,8 +11,12 @@ public class GalleryPicker : MonoBehaviour
     public static List<GameObject> lista = new List<GameObject>();
     private bool ctrl = false;
     private bool continuar = false;
-    [SerializeField] GameObject good;
+    [SerializeField] GameObject good,panelTurnOff, panelTurnOn;
     [SerializeField] Sprite close;
+    [SerializeField] GameObject one, two, three, four, five, six;
+
+
+    ImagesButons instance;
     void Start()
     {
         GameObject colorBut = this.gameObject;
@@ -37,7 +41,7 @@ public class GalleryPicker : MonoBehaviour
         GetInput();
     }
 
-    public void PickImage(int maxSize, string imagen)
+    public void PickImage(int maxSize, string imagenNomb)
     {
         Debug.Log(this.name);
         if (NativeGallery.IsMediaPickerBusy())
@@ -58,12 +62,37 @@ public class GalleryPicker : MonoBehaviour
                     }
                     mySprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
 
-                    foreach (GameObject myGameObject in lista)
+                    foreach (GameObject but in lista)
                     {
-                        if (imagen == myGameObject.name)
+                        if (imagenNomb == but.name)
                         {
-                            myGameObject.GetComponent<Image>().sprite = mySprite;
+                            but.GetComponent<Image>().sprite = mySprite;
+                            
+                            switch (imagenNomb)
+                            {
+                                case "One":
+                                    one.GetComponent<Image>().sprite = mySprite;
+                                    break;
+                                case "Two":
+                                    two.GetComponent<Image>().sprite = mySprite;
+                                    break;
+                                case "Three":
+                                    three.GetComponent<Image>().sprite = mySprite;
+                                    break;
+                                case "Four":
+                                    four.GetComponent<Image>().sprite = mySprite;
+                                    break;
+                                case "Five":
+                                    five.GetComponent<Image>().sprite = mySprite;
+                                    break;
+                                case "Six":
+                                    six.GetComponent<Image>().sprite = mySprite;
+                                    break;
+                            }
                         }
+
+                        
+                        
                     }
 
                     
@@ -131,29 +160,37 @@ public class GalleryPicker : MonoBehaviour
             {
                 continuar = true;
                 Debug.Log("conitnua");
-                hit.collider.gameObject.GetComponent<Image>().sprite = close;
+
+                //hit.collider.gameObject.GetComponent<Image>().sprite = close;
+                panelTurnOn.SetActive(true);
+               
+                panelTurnOff.SetActive(false);
             }
             else if (hit.collider != null && !continuar)
             {
   
                 PickImage(512, hit.transform.name);
                 Debug.Log(hit.transform.name);
+               
             }
             else if (hit.collider != null && continuar && !ctrl)
             {
-
-                foreach (GameObject myGameObject in lista)
+                panelTurnOn.SetActive(true);
+               // instance.startGame=true;
+                panelTurnOff.SetActive(false);
+                
+                /*foreach (GameObject myGameObject in lista)
                 {
                     myGameObject.SetActive(false);
                 }
 
                 good.GetComponent<Image>().sprite = hit.transform.GetComponent<Image>().sprite;
                 good.GetComponent<Image>().enabled = true;
-                ctrl = true;
+                ctrl = true;*/
             }
            
         }
-       else
+       /*else
         {
             if (ctrl)
                 Debug.Log("ENDEdS");
@@ -163,7 +200,7 @@ public class GalleryPicker : MonoBehaviour
                 good.GetComponent<Image>().enabled = false;
             }
             ctrl = false;
-        }
+        }*/
 
 
 

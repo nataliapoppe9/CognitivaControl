@@ -8,6 +8,7 @@ public class ImagesButons : MonoBehaviour
     public string DeviceName = "MESA_COGNITIVA";
     public string ServiceUUID = "A9E90000-194C-4523-A473-5FDF36AA4D20";
     public string ButtonUUID = "A9E90002-194C-4523-A473-5FDF36AA4D20";
+    //public static ImagesButons instance;
 
     enum States
     {
@@ -31,6 +32,7 @@ public class ImagesButons : MonoBehaviour
     private int _rssi = 0;
 
     public Text StatusText;
+    //public bool startGame=false;
 
    public TextMeshProUGUI PositionText;
    /* public Text ButtonPositionText1;
@@ -90,10 +92,15 @@ public class ImagesButons : MonoBehaviour
         });
     }
 
+
+
     // Use this for initialization
     void Start()
     {
-        StartProcess();
+       // if (startGame)
+        
+            StartProcess();
+        
     }
 
     private void ProcessButton(byte[] bytes)
