@@ -106,7 +106,7 @@ public class ImagesButons : MonoBehaviour
     private void ProcessButton(byte[] bytes)
     {
         string texto = " ";
-        for(int i=0; i<bytes.Length; i++)
+        for(int i=0; i<=bytes.Length; i++)
         {
             texto = texto + bytes[i].ToString();
         }
@@ -416,7 +416,7 @@ public class ImagesButons : MonoBehaviour
 
                             // we received some data from the device
                             ProcessButton(bytes);
-                            StatusMessage = " Recieved Data";
+                            StatusMessage = " Recieved Data" + bytes.Length;
                         });
 
 

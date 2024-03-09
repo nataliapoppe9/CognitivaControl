@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504b488194768b84a84e0e0f65158077, type: 3}
+  m_Name: E1 halloween
+  m_EditorClassIdentifier: 
+  ejercicio: halloween e1
+  img:
+  - {fileID: 21300000, guid: 1a0414e990a88aa4dac0ac32bc9d08a2, type: 3}
+  - {fileID: 21300000, guid: da6c02cc6e6b5734e9373da2aec4d623, type: 3}
+  - {fileID: 21300000, guid: c19612855f6c9394996f0f70b04dda95, type: 3}
+  - {fileID: 21300000, guid: f4e21b0513012e04cbf879ebc4382381, type: 3}
+  - {fileID: 21300000, guid: b27006b0ebf948b41a9be11a8de7654d, type: 3}
+  - {fileID: 21300000, guid: d1845a665a255de46b718f0f498c1834, type: 3}

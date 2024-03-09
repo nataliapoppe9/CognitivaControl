@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504b488194768b84a84e0e0f65158077, type: 3}
+  m_Name: E2 navidad
+  m_EditorClassIdentifier: 
+  ejercicio: navidad e2
+  img:
+  - {fileID: 21300000, guid: c0d464dd3fd272046a3c0fdab2ba29ba, type: 3}
+  - {fileID: 21300000, guid: b4d8bbd7e6048044eb4a4782a8cfceb7, type: 3}
+  - {fileID: 21300000, guid: 80ecaf0ffd82c8d49af910df95a47068, type: 3}
+  - {fileID: 21300000, guid: 78106c5a612829d45b8a591acd8fb60e, type: 3}
+  - {fileID: 21300000, guid: 50fb73bca4030b746bec914f863f7ec6, type: 3}
+  - {fileID: 21300000, guid: e5c03e1c7e1b04345be4b33f4399fae7, type: 3}
+  - {fileID: 21300000, guid: 4dde1b8667401c7419359deeedb24745, type: 3}
+  - {fileID: 21300000, guid: 236bd77467a3c764ab1ff479bb4c15aa, type: 3}
+  - {fileID: 21300000, guid: 39253e7376f0a864982258770ead2e37, type: 3}
+  - {fileID: 21300000, guid: c200f70b761a9f6489b8ba69ed939f35, type: 3}
+  - {fileID: 21300000, guid: 2fbcc3bbc9a465c468b317e0f83c3204, type: 3}
+  - {fileID: 21300000, guid: 8f3ecb19a47c3b14abbb2fc11d395405, type: 3}

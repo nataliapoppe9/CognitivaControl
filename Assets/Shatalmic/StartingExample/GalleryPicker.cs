@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,13 @@ public class GalleryPicker : MonoBehaviour
     //[SerializeField] GameObject imagen;
     public static List<GameObject> lista = new List<GameObject>();
     private bool ctrl = false;
+    private bool menu = false;
     private bool continuar = false;
-    [SerializeField] GameObject good,panelTurnOff, panelTurnOn;
+    [SerializeField] GameObject good,panelTurnOff, panelTurnOn, panelBase, panelSelectImg;
     [SerializeField] Sprite close;
     [SerializeField] GameObject one, two, three, four, five, six;
+
+    string nameSelected;
 
 
     ImagesButons instance;
@@ -38,7 +42,7 @@ public class GalleryPicker : MonoBehaviour
 
     void Update()
     {
-        GetInput();
+       StartCoroutine(GetInput());
     }
 
     public void PickImage(int maxSize, string imagenNomb)
@@ -149,13 +153,79 @@ public class GalleryPicker : MonoBehaviour
 		
       
 	}*/
+    public void CerrarPanel(GameObject panel)
+    {
+        panel.SetActive(false);
+        foreach(GameObject but in lista)
+        {
+            but.GetComponent<Collider2D>().enabled = true;
+        }
+        menu = false;
+    }
 
-    public void GetInput()
+ //IEnumerator
+    public IEnumerator GetInput()
     {
         if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Stationary))
         {
             RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, -Vector2.up);
 
+
+
+            if (menu)
+            {
+                if (hit.collider != null && hit.collider.name.Contains("Image")){
+
+                    foreach(GameObject but in lista)
+                    { 
+                        if(nameSelected ==  but.name)
+                        {
+                            Debug.Log(but.name + " " + nameSelected);
+                            but.GetComponent<Image>().sprite = hit.collider.GetComponent<Image>().sprite;
+                        }
+                    }
+                    yield return new WaitForSeconds(0.2f);
+                    CerrarPanel(panelSelectImg);
+                    
+
+                }
+                else if(hit.collider != null && hit.collider.name== "Abrir")
+                {
+                    PickImage(512, hit.transform.name);
+                    Debug.Log(hit.transform.name);
+                    CerrarPanel(panelSelectImg);
+                    menu = false;
+                    yield return new WaitForSeconds(0.07f);
+                }
+            }
+            else if(!menu)
+            {
+                if (hit.collider != null && hit.collider.name == "continue")
+                {
+                    continuar = true;
+                    Debug.Log("conitnua"); 
+                    yield return new WaitForSeconds(0.07f);
+
+                }
+                else if (hit.collider != null && !continuar)
+                {
+                    Debug.Log("vez");
+                    foreach (GameObject but in lista)
+                    {
+                        but.GetComponent<Collider2D>().enabled = false;
+                    }
+                    yield return new WaitForSeconds(0.2f);
+                                      
+                    nameSelected = hit.collider.name;
+                    menu = true;
+                    panelSelectImg.SetActive(true);
+
+                }
+
+            }
+
+            
+            /*
             if (hit.collider != null && hit.collider.name == "continue")
             {
                 continuar = true;
@@ -163,22 +233,25 @@ public class GalleryPicker : MonoBehaviour
 
                 //hit.collider.gameObject.GetComponent<Image>().sprite = close;
                 panelTurnOn.SetActive(true);
-               
+
                 panelTurnOff.SetActive(false);
             }
             else if (hit.collider != null && !continuar)
             {
-  
-                PickImage(512, hit.transform.name);
+                panelTurnOn.SetActive(true);
+
+                panelTurnOff.SetActive(false);
+                menu = true;
+                // PickImage(512, hit.transform.name);
                 Debug.Log(hit.transform.name);
-               
+
             }
             else if (hit.collider != null && continuar && !ctrl)
             {
                 panelTurnOn.SetActive(true);
-               // instance.startGame=true;
+                // instance.startGame=true;
                 panelTurnOff.SetActive(false);
-                
+
                 /*foreach (GameObject myGameObject in lista)
                 {
                     myGameObject.SetActive(false);
@@ -186,8 +259,10 @@ public class GalleryPicker : MonoBehaviour
 
                 good.GetComponent<Image>().sprite = hit.transform.GetComponent<Image>().sprite;
                 good.GetComponent<Image>().enabled = true;
-                ctrl = true;*/
+                //ctrl = true;
+            //
             }
+            */
            
         }
        /*else
