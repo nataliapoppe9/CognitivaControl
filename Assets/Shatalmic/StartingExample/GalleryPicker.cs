@@ -163,6 +163,8 @@ public class GalleryPicker : MonoBehaviour
         menu = false;
     }
 
+
+
  //IEnumerator
     public IEnumerator GetInput()
     {
@@ -175,12 +177,12 @@ public class GalleryPicker : MonoBehaviour
             if (menu)
             {
                 if (hit.collider != null && hit.collider.name.Contains("Image")){
-
+                    Debug.Log("menu");
                     foreach(GameObject but in lista)
                     { 
                         if(nameSelected ==  but.name)
                         {
-                            Debug.Log(but.name + " " + nameSelected);
+                           // Debug.Log(but.name + " " + nameSelected);
                             but.GetComponent<Image>().sprite = hit.collider.GetComponent<Image>().sprite;
                         }
                     }
