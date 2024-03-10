@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,11 @@ public class ImagesButons : MonoBehaviour
     //public static ImagesButons instance;
 
     GalleryPicker jugar;
+    public static List<GameObject> lista = new List<GameObject>();
+    public static List<Transform> listaPos = new List<Transform>();
+    Transform posicionAnterior;
+    public int pulsado=6;
+    [SerializeField] GameObject posicion;
 
     enum States
     {
@@ -44,12 +50,7 @@ public class ImagesButons : MonoBehaviour
     public Text ButtonPositionText5;
     public Text ButtonPositionText6;
 */
-    public GameObject img1;
-    public GameObject img2;
-    public GameObject img3;
-    public GameObject img4;
-    public GameObject img5;
-    public GameObject img6;
+   
 
 
     private string StatusMessage
@@ -101,8 +102,26 @@ public class ImagesButons : MonoBehaviour
     {
         // if (startGame)
         jugar = FindObjectOfType<GalleryPicker>();
-      
-            StartProcess();
+
+        
+            GameObject[] prueba = FindObjectsOfType<GameObject>();
+
+            foreach (GameObject myGameObject in prueba)
+            {
+                if (!lista.Contains(myGameObject))
+                {
+                    if (myGameObject.name == "One" || myGameObject.name == "Two" || myGameObject.name == "Three" || myGameObject.name == "Four" || myGameObject.name == "Five" || myGameObject.name == "Six")
+                    {
+
+                        lista.Add(myGameObject);
+                        listaPos.Add(myGameObject.transform);
+                        Debug.Log(myGameObject.transform);
+                    }
+                }
+            }
+        
+
+        StartProcess();
         
     }
 
@@ -119,81 +138,152 @@ public class ImagesButons : MonoBehaviour
 
         if (jugar.continuar)
         {
-            Debug.Log(bytes.ToString());
-            if (bytes.ToString() == "000000")
+            
+            if (bytes[0]== 0x00 && bytes[1] == 0x00 && bytes[2] == 0x00 && bytes[3] == 0x00 && bytes[4] == 0x00 && bytes[5] == 0x00)
             {
-                // ButtonPositionText.text = "But1: OFF " + bytes[0];
-                img1.gameObject.SetActive(false);
-                img2.gameObject.SetActive(false);
-                img3.gameObject.SetActive(false);
-                img4.gameObject.SetActive(false);
-                img5.gameObject.SetActive(false);
-                img6.gameObject.SetActive(false);
+                switch (pulsado)
+                {
+                    case 0:
+                        lista[0].transform.position = posicionAnterior.position;
+                        pulsado = 6;
+                        break;
+                    case 1:
+                        lista[1].transform.position = posicionAnterior.position;
+                        pulsado = 6;
+                        break;
+                    case 2:
+                        lista[2].transform.position = posicionAnterior.position;
+                        pulsado = 6;
+                        break;
+                    case 3:
+                        lista[3].transform.position = posicionAnterior.position;
+                        pulsado = 6;
+                        break;
+                    case 4:
+                        lista[4].transform.position = posicionAnterior.position;
+                        pulsado = 6;
+                        break;
+                    case 5:
+                        lista[5].transform.position = posicionAnterior.position;
+                        pulsado = 6;
+                        break;
+                    default:
+                        pulsado = 6;
+                        break;
+
+                }
+                foreach (GameObject obj in lista)
+                {
+                    obj.SetActive(true);
+                }
+                
             }
             
             if (bytes[0] == 0x01)
             {
-                img2.gameObject.SetActive(false);
-                img3.gameObject.SetActive(false);
-                img4.gameObject.SetActive(false);
-                img5.gameObject.SetActive(false);
-                img6.gameObject.SetActive(false);
-                img1.gameObject.SetActive(true);
+                
+                foreach(GameObject obj in lista)
+                {
+                    obj.SetActive(false);
+                    if (obj == lista[0]) { 
+                        
+                        pulsado = 0;
+                        posicionAnterior.position=obj.transform.position;
+                        lista[0].transform.position = posicion.transform.position;
+                        lista[0].SetActive(true);
+                    }
+    
+                    
+                }
+                
             }
 
             if (bytes[1] == 0x01)
             {
+                foreach (GameObject obj in lista)
+                {
+                    obj.SetActive(false);
+                    if (obj == lista[1])
+                    {
+                        pulsado = 1;
+                        posicionAnterior.position = obj.transform.position;
+                        lista[1].transform.position = posicion.transform.position;
+                        lista[1].SetActive(true);
+                    }
 
-                //  ButtonPositionText1.text = "But2: OFF " + bytes[1];
-                img1.gameObject.SetActive(false);
-                img2.gameObject.SetActive(true);
-                img3.gameObject.SetActive(false);
-                img4.gameObject.SetActive(false);
-                img5.gameObject.SetActive(false);
-                img6.gameObject.SetActive(false);
+
+                }
             }
             if (bytes[2] == 0x01)
             {
-                img1.gameObject.SetActive(false);
-                img3.gameObject.SetActive(true);
-                img4.gameObject.SetActive(false);
-                img5.gameObject.SetActive(false);
-                img6.gameObject.SetActive(false);
-                img2.gameObject.SetActive(false);
+                foreach (GameObject obj in lista)
+                {
+                    obj.SetActive(false);
+                    if (obj == lista[2])
+                    {
+                        pulsado = 2;
+                        posicionAnterior.position = obj.transform.position;
+                        lista[2].transform.position = posicion.transform.position;
+                        lista[2].SetActive(true);
+                    }
+
+
+                }
+            }
+
+            if (bytes[3] == 0x01)
+            {
+                foreach (GameObject obj in lista)
+                {
+                    obj.SetActive(false);
+                    if (obj == lista[3])
+                    {
+                        pulsado = 3;
+                        posicionAnterior.position = obj.transform.position;
+                        lista[3].transform.position = posicion.transform.position;
+                        lista[3].SetActive(true);
+                    }
+
+
+                }
             }
 
             if (bytes[4] == 0x01)
             {
-                img1.gameObject.SetActive(false);
-                img2.gameObject.SetActive(false);
-                img3.gameObject.SetActive(false);
-                img4.gameObject.SetActive(true);
-                img5.gameObject.SetActive(false);
-                img6.gameObject.SetActive(false);
-            }
+                foreach (GameObject obj in lista)
+                {
+                    obj.SetActive(false);
+                    if (obj == lista[4])
+                    {
+                        pulsado = 4;
+                        posicionAnterior.position = obj.transform.position;
+                        lista[4].transform.position = posicion.transform.position;
+                        lista[4].SetActive(true);
+                    }
 
+
+                }
+            }
             else if (bytes[5] == 0x01)
             {
-                img1.gameObject.SetActive(false);
-                img2.gameObject.SetActive(false);
-                img4.gameObject.SetActive(false);
-                img5.gameObject.SetActive(true);
-                img6.gameObject.SetActive(false);
-                img3.gameObject.SetActive(false);
+                foreach (GameObject obj in lista)
+                {
+                    obj.SetActive(false);
+                    if (obj == lista[5])
+                    {
+                        pulsado = 5;
+                        posicionAnterior.position = obj.transform.position;
+                        lista[5].transform.position = posicion.transform.position;
+                        lista[5].SetActive(true);
+                    }
 
+
+                }
             }
         }
     }
 
 
-    
-
-
-    public void ManagePress()
-    {
-
-    }
-    // Update is called once per frame
     void Update()
     {
         if (_timeout > 0f)

@@ -10,7 +10,6 @@ public class GalleryPicker : MonoBehaviour
     public Sprite mySprite;
     //[SerializeField] GameObject imagen;
     public static List<GameObject> lista = new List<GameObject>();
-    private bool ctrl = false;
     private bool menu = false;
     public bool continuar = false;
     [SerializeField] GameObject good,panelTurnOff, panelTurnOn, panelBase, panelSelectImg, panelGame;
@@ -23,7 +22,6 @@ public class GalleryPicker : MonoBehaviour
    
     void Start()
     {
-        GameObject colorBut = this.gameObject;
         GameObject[] prueba = FindObjectsOfType<GameObject>();
 
         foreach (GameObject myGameObject in prueba)
