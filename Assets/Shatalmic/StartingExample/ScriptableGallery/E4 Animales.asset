@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504b488194768b84a84e0e0f65158077, type: 3}
+  m_Name: E4 Animales
+  m_EditorClassIdentifier: 
+  ejercicio: animales E4
+  img:
+  - {fileID: 21300000, guid: 610fc8612dc3eee449af8e7939330170, type: 3}
+  - {fileID: 21300000, guid: 6cc383c7cb5115041b198e3c52feaf86, type: 3}
+  - {fileID: 21300000, guid: 33779c909da8ac142ac108f4f378d1a7, type: 3}
+  - {fileID: 21300000, guid: bb618170e1bd8f749889890106640ff2, type: 3}
+  - {fileID: 21300000, guid: 478020ffe751b77428c52b733261ccb1, type: 3}
+  - {fileID: 21300000, guid: 6e8fc06e6b4231a42853d6f25b4fd016, type: 3}
+  - {fileID: 21300000, guid: 428a909e7c194aa49b505c4fdd2156c0, type: 3}
+  - {fileID: 21300000, guid: 4710c621fcfc2ff4d93eb829d1e10423, type: 3}
+  - {fileID: 21300000, guid: 0fa8ac7b14bb8354e8b0a5bf0390d056, type: 3}
+  - {fileID: 21300000, guid: aa9d0c62ad24d3d4ca20b2c48e8adbd0, type: 3}
+  - {fileID: 21300000, guid: e8e2cb1a1915bb042977906b1eee47d9, type: 3}
+  - {fileID: 21300000, guid: 33993a33bb51e814da4568f425bc4188, type: 3}

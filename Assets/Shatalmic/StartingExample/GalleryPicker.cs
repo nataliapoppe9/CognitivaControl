@@ -12,15 +12,15 @@ public class GalleryPicker : MonoBehaviour
     public static List<GameObject> lista = new List<GameObject>();
     private bool ctrl = false;
     private bool menu = false;
-    private bool continuar = false;
-    [SerializeField] GameObject good,panelTurnOff, panelTurnOn, panelBase, panelSelectImg;
+    public bool continuar = false;
+    [SerializeField] GameObject good,panelTurnOff, panelTurnOn, panelBase, panelSelectImg, panelGame;
     [SerializeField] Sprite close;
     [SerializeField] GameObject one, two, three, four, five, six;
 
     string nameSelected;
-
-
+    bool controlA = true;
     ImagesButons instance;
+   
     void Start()
     {
         GameObject colorBut = this.gameObject;
@@ -176,28 +176,29 @@ public class GalleryPicker : MonoBehaviour
 
             if (menu)
             {
-                if (hit.collider != null && hit.collider.name.Contains("Image")){
+                if (hit.collider != null && hit.collider.name.Contains("Image")) {
                     Debug.Log("menu");
-                    foreach(GameObject but in lista)
-                    { 
-                        if(nameSelected ==  but.name)
+                    foreach (GameObject but in lista)
+                    {
+                        if (nameSelected == but.name)
                         {
-                           // Debug.Log(but.name + " " + nameSelected);
+                            // Debug.Log(but.name + " " + nameSelected);
                             but.GetComponent<Image>().sprite = hit.collider.GetComponent<Image>().sprite;
                         }
                     }
                     yield return new WaitForSeconds(0.2f);
                     CerrarPanel(panelSelectImg);
-                    
+
 
                 }
-                else if(hit.collider != null && hit.collider.name== "Abrir")
+                else if (hit.collider != null && hit.collider.name.Contains("Abrir")&& controlA)
                 {
-                    PickImage(512, hit.transform.name);
+                    controlA = false;
+                    PickImage(512, nameSelected);
                     Debug.Log(hit.transform.name);
                     CerrarPanel(panelSelectImg);
-                    menu = false;
-                    yield return new WaitForSeconds(0.07f);
+                   
+                    yield return new WaitForSeconds(0.2f);
                 }
             }
             else if(!menu)
@@ -220,67 +221,12 @@ public class GalleryPicker : MonoBehaviour
                                       
                     nameSelected = hit.collider.name;
                     menu = true;
+                    controlA = true;
                     panelSelectImg.SetActive(true);
 
                 }
-
             }
-
-            
-            /*
-            if (hit.collider != null && hit.collider.name == "continue")
-            {
-                continuar = true;
-                Debug.Log("conitnua");
-
-                //hit.collider.gameObject.GetComponent<Image>().sprite = close;
-                panelTurnOn.SetActive(true);
-
-                panelTurnOff.SetActive(false);
-            }
-            else if (hit.collider != null && !continuar)
-            {
-                panelTurnOn.SetActive(true);
-
-                panelTurnOff.SetActive(false);
-                menu = true;
-                // PickImage(512, hit.transform.name);
-                Debug.Log(hit.transform.name);
-
-            }
-            else if (hit.collider != null && continuar && !ctrl)
-            {
-                panelTurnOn.SetActive(true);
-                // instance.startGame=true;
-                panelTurnOff.SetActive(false);
-
-                /*foreach (GameObject myGameObject in lista)
-                {
-                    myGameObject.SetActive(false);
-                }
-
-                good.GetComponent<Image>().sprite = hit.transform.GetComponent<Image>().sprite;
-                good.GetComponent<Image>().enabled = true;
-                //ctrl = true;
-            //
-            }
-            */
-           
         }
-       /*else
-        {
-            if (ctrl)
-                Debug.Log("ENDEdS");
-            foreach (GameObject myGameObject in lista)
-            {
-                myGameObject.SetActive(true);
-                good.GetComponent<Image>().enabled = false;
-            }
-            ctrl = false;
-        }*/
-
-
-
+     
     }
-
 }

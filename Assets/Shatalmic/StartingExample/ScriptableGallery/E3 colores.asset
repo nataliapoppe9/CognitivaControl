@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504b488194768b84a84e0e0f65158077, type: 3}
+  m_Name: E3 colores
+  m_EditorClassIdentifier: 
+  ejercicio: Colores E3
+  img:
+  - {fileID: 21300000, guid: 4cf5db54eb966c84384d940fffaff22b, type: 3}
+  - {fileID: 21300000, guid: 75276afc721d18742a5d7c8ede7df5a3, type: 3}
+  - {fileID: 21300000, guid: 55bcbc03cdaf3004bb210f4d3fd94694, type: 3}
+  - {fileID: 21300000, guid: 935e0353a9d52d74086ace268934628d, type: 3}
+  - {fileID: 21300000, guid: c0849569df1350647bfb7ab7169b7bd8, type: 3}
+  - {fileID: 21300000, guid: 0c144dc755bea3344af0b1940df0e486, type: 3}
+  - {fileID: 21300000, guid: 033cdbd83d5be464c9a056aabca517f7, type: 3}
+  - {fileID: 21300000, guid: 2b1c91ef57a38284aa0c953eb7603b6a, type: 3}
+  - {fileID: 21300000, guid: e948acb8a81a53a419edc86255762f70, type: 3}
+  - {fileID: 21300000, guid: fe94e7885942d3a419b711f7a3739b7f, type: 3}
+  - {fileID: 21300000, guid: 1e5d5680af7f1e44588b41dcf64ac5a4, type: 3}
+  - {fileID: 21300000, guid: 5167e27d81dd3f547b848ca12f454eb0, type: 3}

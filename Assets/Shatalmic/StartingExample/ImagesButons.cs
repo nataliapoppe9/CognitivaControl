@@ -10,6 +10,8 @@ public class ImagesButons : MonoBehaviour
     public string ButtonUUID = "A9E90002-194C-4523-A473-5FDF36AA4D20";
     //public static ImagesButons instance;
 
+    GalleryPicker jugar;
+
     enum States
     {
         None,
@@ -97,146 +99,94 @@ public class ImagesButons : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       // if (startGame)
-        
+        // if (startGame)
+        jugar = FindObjectOfType<GalleryPicker>();
+      
             StartProcess();
         
     }
 
     private void ProcessButton(byte[] bytes)
     {
+
+        PositionText.GetComponent<TextMeshProUGUI>().text = bytes.Length.ToString();
         string texto = " ";
-        for(int i=0; i<=bytes.Length; i++)
+        for (int i = 0; i < bytes.Length; i++)
         {
             texto = texto + bytes[i].ToString();
         }
         PositionText.GetComponent<TextMeshProUGUI>().text = texto;
 
-        /*if (bytes[0] == 0x00)
-         {
-            // ButtonPositionText.text = "But1: OFF " + bytes[0];
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-         }
+        if (jugar.continuar)
+        {
+            Debug.Log(bytes.ToString());
+            if (bytes.ToString() == "000000")
+            {
+                // ButtonPositionText.text = "But1: OFF " + bytes[0];
+                img1.gameObject.SetActive(false);
+                img2.gameObject.SetActive(false);
+                img3.gameObject.SetActive(false);
+                img4.gameObject.SetActive(false);
+                img5.gameObject.SetActive(false);
+                img6.gameObject.SetActive(false);
+            }
+            
+            if (bytes[0] == 0x01)
+            {
+                img2.gameObject.SetActive(false);
+                img3.gameObject.SetActive(false);
+                img4.gameObject.SetActive(false);
+                img5.gameObject.SetActive(false);
+                img6.gameObject.SetActive(false);
+                img1.gameObject.SetActive(true);
+            }
 
-         else if (bytes[0] == 0x01)
-         {
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-             img1.gameObject.SetActive(true);
-         }
+            if (bytes[1] == 0x01)
+            {
 
-         if (bytes[1] == 0x00)
-         {
+                //  ButtonPositionText1.text = "But2: OFF " + bytes[1];
+                img1.gameObject.SetActive(false);
+                img2.gameObject.SetActive(true);
+                img3.gameObject.SetActive(false);
+                img4.gameObject.SetActive(false);
+                img5.gameObject.SetActive(false);
+                img6.gameObject.SetActive(false);
+            }
+            if (bytes[2] == 0x01)
+            {
+                img1.gameObject.SetActive(false);
+                img3.gameObject.SetActive(true);
+                img4.gameObject.SetActive(false);
+                img5.gameObject.SetActive(false);
+                img6.gameObject.SetActive(false);
+                img2.gameObject.SetActive(false);
+            }
 
-             //  ButtonPositionText1.text = "But2: OFF " + bytes[1];
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-         }
-         else if (bytes[1] == 0x01)
-         {
-             img1.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-             img2.gameObject.SetActive(true);
-         }
+            if (bytes[4] == 0x01)
+            {
+                img1.gameObject.SetActive(false);
+                img2.gameObject.SetActive(false);
+                img3.gameObject.SetActive(false);
+                img4.gameObject.SetActive(true);
+                img5.gameObject.SetActive(false);
+                img6.gameObject.SetActive(false);
+            }
 
-         if (bytes[2] == 0x00)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-         }
+            else if (bytes[5] == 0x01)
+            {
+                img1.gameObject.SetActive(false);
+                img2.gameObject.SetActive(false);
+                img4.gameObject.SetActive(false);
+                img5.gameObject.SetActive(true);
+                img6.gameObject.SetActive(false);
+                img3.gameObject.SetActive(false);
 
-         else if (bytes[2] == 0x01)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-             img3.gameObject.SetActive(true);
-
-         }
-
-
-         if (bytes[3] == 0x00)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-         }
-
-         else if (bytes[3] == 0x01)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false); 
-             img4.gameObject.SetActive(true);
-         }
-
-         if (bytes[4] == 0x00)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-         }
-
-         else if (bytes[4] == 0x01)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-             img5.gameObject.SetActive(true);
-         }
-
-         if (bytes[5] == 0x00)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(false);
-         }
-         else if (bytes[5] == 0x01)
-         {
-             img1.gameObject.SetActive(false);
-             img2.gameObject.SetActive(false);
-             img3.gameObject.SetActive(false);
-             img4.gameObject.SetActive(false);
-             img5.gameObject.SetActive(false);
-             img6.gameObject.SetActive(true);
-         }*/
-
-
+            }
+        }
     }
+
+
+    
 
 
     public void ManagePress()
@@ -320,6 +270,8 @@ public class ImagesButons : MonoBehaviour
 
                         BluetoothLEHardwareInterface.ReadCharacteristic(_deviceAddress, ServiceUUID, ButtonUUID, (characteristic, bytes) =>
                         {
+
+                            PositionText.GetComponent<TextMeshProUGUI>().text = "read";
                             ProcessButton(bytes);
                             StatusMessage = "process button";
                         });
