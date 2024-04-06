@@ -13,10 +13,11 @@ public class ImagesButons : MonoBehaviour
 
     GalleryPicker jugar;
     public static List<GameObject> lista = new List<GameObject>();
+    public GameObject centerImg;
     public static List<Transform> listaPos = new List<Transform>();
-    Transform posicionAnterior;
-    public int pulsado=6;
-    [SerializeField] GameObject posicion;
+   // Transform posicionAnterior;
+    //public int pulsado=6;
+    //[SerializeField] GameObject posicion;
 
     enum States
     {
@@ -95,6 +96,10 @@ public class ImagesButons : MonoBehaviour
         });
     }
 
+    private void Awake()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
 
 
     // Use this for initialization
@@ -134,152 +139,93 @@ public class ImagesButons : MonoBehaviour
         {
             texto = texto + bytes[i].ToString();
         }
-        PositionText.GetComponent<TextMeshProUGUI>().text = texto;
+        PositionText.GetComponent<TextMeshProUGUI>().text = texto + " , length:"+ texto.Length;
 
-        if (jugar.continuar)
-        {
-            
-            if (bytes[0]== 0x00 && bytes[1] == 0x00 && bytes[2] == 0x00 && bytes[3] == 0x00 && bytes[4] == 0x00 && bytes[5] == 0x00)
-            {
-                switch (pulsado)
-                {
-                    case 0:
-                        lista[0].transform.position = posicionAnterior.position;
-                        pulsado = 6;
-                        break;
-                    case 1:
-                        lista[1].transform.position = posicionAnterior.position;
-                        pulsado = 6;
-                        break;
-                    case 2:
-                        lista[2].transform.position = posicionAnterior.position;
-                        pulsado = 6;
-                        break;
-                    case 3:
-                        lista[3].transform.position = posicionAnterior.position;
-                        pulsado = 6;
-                        break;
-                    case 4:
-                        lista[4].transform.position = posicionAnterior.position;
-                        pulsado = 6;
-                        break;
-                    case 5:
-                        lista[5].transform.position = posicionAnterior.position;
-                        pulsado = 6;
-                        break;
-                    default:
-                        pulsado = 6;
-                        break;
+        if (jugar.continuar) {
+            centerImg.GetComponent<Image>().enabled = true;
 
-                }
-                foreach (GameObject obj in lista)
-                {
-                    obj.SetActive(true);
-                }
-                
-            }
-            
-            if (bytes[0] == 0x01)
-            {
-                
-                foreach(GameObject obj in lista)
-                {
-                    obj.SetActive(false);
-                    if (obj == lista[0]) { 
-                        
-                        pulsado = 0;
-                        posicionAnterior.position=obj.transform.position;
-                        lista[0].transform.position = posicion.transform.position;
-                        lista[0].SetActive(true);
-                    }
-    
-                    
-                }
-                
+            if (texto== " 000000") {
+                //turnOff
+                centerImg.SetActive(false);
             }
 
-            if (bytes[1] == 0x01)
+            else if (texto.Length == 7)
             {
-                foreach (GameObject obj in lista)
+                if (texto == " 100000")
                 {
-                    obj.SetActive(false);
-                    if (obj == lista[1])
+                    //1
+                    foreach (GameObject img in lista)
                     {
-                        pulsado = 1;
-                        posicionAnterior.position = obj.transform.position;
-                        lista[1].transform.position = posicion.transform.position;
-                        lista[1].SetActive(true);
+                        if (img.name == "One")
+                        {
+                            centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            centerImg.SetActive(true);
+                        }
                     }
 
-
                 }
-            }
-            if (bytes[2] == 0x01)
-            {
-                foreach (GameObject obj in lista)
+                if (texto == " 010000")
                 {
-                    obj.SetActive(false);
-                    if (obj == lista[2])
+                    //2
+                    foreach (GameObject img in lista)
                     {
-                        pulsado = 2;
-                        posicionAnterior.position = obj.transform.position;
-                        lista[2].transform.position = posicion.transform.position;
-                        lista[2].SetActive(true);
+                        if (img.name == "Two")
+                        {
+                            centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                        }
                     }
-
-
+                    centerImg.SetActive(true);
                 }
-            }
-
-            if (bytes[3] == 0x01)
-            {
-                foreach (GameObject obj in lista)
+                if (texto == " 001000")
                 {
-                    obj.SetActive(false);
-                    if (obj == lista[3])
+                    //3
+                    foreach (GameObject img in lista)
                     {
-                        pulsado = 3;
-                        posicionAnterior.position = obj.transform.position;
-                        lista[3].transform.position = posicion.transform.position;
-                        lista[3].SetActive(true);
+                        if (img.name == "Three")
+                        {
+                            centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                        }
                     }
-
-
+                    centerImg.SetActive(true);
                 }
-            }
-
-            if (bytes[4] == 0x01)
-            {
-                foreach (GameObject obj in lista)
+                else if (texto == " 000100")
                 {
-                    obj.SetActive(false);
-                    if (obj == lista[4])
+                    //4
+                    foreach (GameObject img in lista)
                     {
-                        pulsado = 4;
-                        posicionAnterior.position = obj.transform.position;
-                        lista[4].transform.position = posicion.transform.position;
-                        lista[4].SetActive(true);
+                        if (img.name == "Four")
+                        {
+                            centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                        }
                     }
-
-
+                    centerImg.SetActive(true);
                 }
-            }
-            else if (bytes[5] == 0x01)
-            {
-                foreach (GameObject obj in lista)
+                else if (texto == " 000010")
                 {
-                    obj.SetActive(false);
-                    if (obj == lista[5])
+                    //5
+                    foreach (GameObject img in lista)
                     {
-                        pulsado = 5;
-                        posicionAnterior.position = obj.transform.position;
-                        lista[5].transform.position = posicion.transform.position;
-                        lista[5].SetActive(true);
+                        if (img.name == "Five")
+                        {
+                            centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                        }
                     }
-
-
+                    centerImg.SetActive(true);
+                }
+                else if (texto == " 000001")
+                {
+                    //6
+                    foreach (GameObject img in lista)
+                    {
+                        if (img.name == "Six")
+                        {
+                            centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                        }
+                    }
+                    centerImg.SetActive(true);
                 }
             }
+
         }
     }
 
