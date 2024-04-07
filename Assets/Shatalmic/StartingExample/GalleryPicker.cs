@@ -198,6 +198,10 @@ public class GalleryPicker : MonoBehaviour
                    
                     yield return new WaitForSeconds(0.2f);
                 }
+                else if(hit.collider !=null && hit.collider.name.Contains("Close")&& controlA)
+                {
+                    CerrarPanel(panelSelectImg);
+                }
             }
             else if(!menu)
             {
