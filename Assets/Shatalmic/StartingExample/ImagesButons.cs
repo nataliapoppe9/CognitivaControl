@@ -15,6 +15,7 @@ public class ImagesButons : MonoBehaviour
     public static List<GameObject> lista = new List<GameObject>();
     public GameObject centerImg;
     public static List<Transform> listaPos = new List<Transform>();
+    [SerializeField] GameObject spriteConnected,spriteOn;
    // Transform posicionAnterior;
     //public int pulsado=6;
     //[SerializeField] GameObject posicion;
@@ -353,6 +354,7 @@ public class ImagesButons : MonoBehaviour
                                     _connected = true;
                                     SetState(States.RequestMTU, 4f);
                                     StatusMessage = "Connected";
+                                    spriteConnected.GetComponent<Image>().sprite = spriteOn.GetComponent<Image>().sprite;
                                 }
                             }
                         });

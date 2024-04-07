@@ -13,8 +13,8 @@ public class GalleryPicker : MonoBehaviour
     private bool menu = false;
     public bool continuar = false;
     [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, panelGame;
-    [SerializeField] Sprite close;
-    [SerializeField] GameObject one, two, three, four, five, six, restart;
+    [SerializeField] Sprite close, spriteAñadir;
+    [SerializeField] GameObject one, two, three, four, five, six, start;
 
     string nameSelected;
     bool controlA = true;
@@ -23,14 +23,12 @@ public class GalleryPicker : MonoBehaviour
     void Start()
     {
         GameObject[] prueba = FindObjectsOfType<GameObject>();
-
         foreach (GameObject myGameObject in prueba)
         {
             if (!lista.Contains(myGameObject))
             {
                 if (myGameObject.name == "One" || myGameObject.name == "Two" || myGameObject.name == "Three" || myGameObject.name == "Four" || myGameObject.name == "Five" || myGameObject.name == "Six")
                 {
-
                     lista.Add(myGameObject);
                     Debug.Log(myGameObject.name);
                 }
@@ -153,12 +151,23 @@ public class GalleryPicker : MonoBehaviour
 	}*/
     public void CerrarPanel(GameObject panel)
     {
+        menu = false;
         panel.SetActive(false);
         foreach(GameObject but in lista)
         {
             but.GetComponent<Collider2D>().enabled = true;
-        }
-        menu = false;
+        } 
+    }
+
+    public void StartAgain()
+    {   
+            continuar = false;
+            foreach (GameObject obj in lista)
+            {
+                obj.GetComponent<Image>().sprite = spriteAñadir;
+                obj.SetActive(true);
+            }
+            start.SetActive(true);
     }
 
 
@@ -166,16 +175,14 @@ public class GalleryPicker : MonoBehaviour
  //IEnumerator
     public IEnumerator GetInput()
     {
-        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Stationary))
+        if ((Input.touchCount > 0) && ( (Input.GetTouch(0).phase == TouchPhase.Began)))
         {
             RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, -Vector2.up);
-
-
 
             if (menu)
             {
                 if (hit.collider != null && hit.collider.name.Contains("Image")) {
-                    Debug.Log("menu");
+                    Debug.Log(hit.collider.name);
                     foreach (GameObject but in lista)
                     {
                         if (nameSelected == but.name)
@@ -184,7 +191,7 @@ public class GalleryPicker : MonoBehaviour
                             but.GetComponent<Image>().sprite = hit.collider.GetComponent<Image>().sprite;
                         }
                     }
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.09f);
                     CerrarPanel(panelSelectImg);
 
 
@@ -209,8 +216,8 @@ public class GalleryPicker : MonoBehaviour
                 {
                     continuar = true;
                     foreach (GameObject obj in lista) { obj.SetActive(false); }
+                    start = hit.collider.gameObject;
                     hit.collider.gameObject.SetActive(false);
-                    restart.SetActive(true);
                     Debug.Log("conitnua"); 
                     yield return new WaitForSeconds(0.07f);
 
