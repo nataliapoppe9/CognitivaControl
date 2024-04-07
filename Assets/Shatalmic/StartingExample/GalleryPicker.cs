@@ -14,7 +14,7 @@ public class GalleryPicker : MonoBehaviour
     public bool continuar = false;
     [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, panelGame;
     [SerializeField] Sprite close;
-    [SerializeField] GameObject one, two, three, four, five, six;
+    [SerializeField] GameObject one, two, three, four, five, six, restart;
 
     string nameSelected;
     bool controlA = true;
@@ -209,6 +209,8 @@ public class GalleryPicker : MonoBehaviour
                 {
                     continuar = true;
                     foreach (GameObject obj in lista) { obj.SetActive(false); }
+                    hit.collider.gameObject.SetActive(false);
+                    restart.SetActive(true);
                     Debug.Log("conitnua"); 
                     yield return new WaitForSeconds(0.07f);
 
