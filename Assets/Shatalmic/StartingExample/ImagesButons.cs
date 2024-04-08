@@ -20,6 +20,8 @@ public class ImagesButons : MonoBehaviour
     //public int pulsado=6;
     //[SerializeField] GameObject posicion;
 
+    AudioManager audioManagerScript;
+    [SerializeField] GameObject audioManagerGO;
     enum States
     {
         None,
@@ -108,6 +110,7 @@ public class ImagesButons : MonoBehaviour
     {
         // if (startGame)
         jugar = FindObjectOfType<GalleryPicker>();
+        audioManagerScript = FindObjectOfType<AudioManager>();
 
         
             GameObject[] prueba = FindObjectsOfType<GameObject>();
@@ -148,6 +151,7 @@ public class ImagesButons : MonoBehaviour
             if (texto== " 000000") {
                 //turnOff
                 centerImg.SetActive(false);
+
             }
 
             else if (texto.Length == 7)
@@ -155,6 +159,10 @@ public class ImagesButons : MonoBehaviour
                 if (texto == " 100000")
                 {
                     //1
+                    if (audioManagerScript.clipXcasilla[0].clip != null)
+                    {
+                        audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[0].clip;
+                    }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "One")
@@ -168,6 +176,10 @@ public class ImagesButons : MonoBehaviour
                 if (texto == " 010000")
                 {
                     //2
+                    if (audioManagerScript.clipXcasilla[1].clip != null)
+                    {
+                        audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[1].clip;
+                    }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "Two")
@@ -180,6 +192,10 @@ public class ImagesButons : MonoBehaviour
                 if (texto == " 001000")
                 {
                     //3
+                    if (audioManagerScript.clipXcasilla[2].clip != null)
+                    {
+                        audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[2].clip;
+                    }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "Three")
@@ -192,6 +208,10 @@ public class ImagesButons : MonoBehaviour
                 else if (texto == " 000100")
                 {
                     //4
+                    if (audioManagerScript.clipXcasilla[3].clip != null)
+                    {
+                        audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[3].clip;
+                    }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "Four")
@@ -204,6 +224,10 @@ public class ImagesButons : MonoBehaviour
                 else if (texto == " 000010")
                 {
                     //5
+                    if (audioManagerScript.clipXcasilla[4].clip != null)
+                    {
+                        audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[4].clip;
+                    }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "Five")
@@ -216,6 +240,10 @@ public class ImagesButons : MonoBehaviour
                 else if (texto == " 000001")
                 {
                     //6
+                    if (audioManagerScript.clipXcasilla[5].clip != null)
+                    {
+                        audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[5].clip;
+                    }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "Six")

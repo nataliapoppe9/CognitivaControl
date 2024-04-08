@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] Sprite imagenAudioOk;
 
  
-    public void PlayWord(string nameAudio)
+    public void PlayWord()
     {
         GameObject s = EventSystem.current.currentSelectedGameObject;
         string audioName = s.transform.parent.GetComponent<TextMeshProUGUI>().text;
@@ -43,7 +43,6 @@ public class AudioManager : MonoBehaviour
         {
             if (audio.name == audioName)
             {
-                //good[audioNumber-1].GetComponent<AudioSource>().clip = audio.clip;
                 clipXcasilla[audioNumber-1].clip = audio.clip;
                 good[audioNumber-1].GetComponent<Image>().sprite = imagenAudioOk;
                 panelAudio.SetActive(false);
