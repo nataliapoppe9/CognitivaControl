@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GalleryPicker : MonoBehaviour
@@ -10,11 +11,14 @@ public class GalleryPicker : MonoBehaviour
     public Sprite mySprite;
     //[SerializeField] GameObject imagen;
     public static List<GameObject> lista = new List<GameObject>();
+    public static List<GameObject> listaBotonesAudio = new List<GameObject>();
     private bool menu = false;
     public bool continuar = false;
-    [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, panelGame;
+    [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, audioPanel;
     [SerializeField] Sprite close, spriteAñadir;
     [SerializeField] GameObject one, two, three, four, five, six, start;
+
+    AudioManager audioManager;
 
     string nameSelected;
     bool controlA = true;
@@ -23,6 +27,8 @@ public class GalleryPicker : MonoBehaviour
     void Start()
     {
         GameObject[] prueba = FindObjectsOfType<GameObject>();
+        audioManager = FindAnyObjectByType<AudioManager>();
+     
         foreach (GameObject myGameObject in prueba)
         {
             if (!lista.Contains(myGameObject))
@@ -30,6 +36,15 @@ public class GalleryPicker : MonoBehaviour
                 if (myGameObject.name == "One" || myGameObject.name == "Two" || myGameObject.name == "Three" || myGameObject.name == "Four" || myGameObject.name == "Five" || myGameObject.name == "Six")
                 {
                     lista.Add(myGameObject);
+                    Debug.Log(myGameObject.name);
+                }
+            }
+
+            if (!listaBotonesAudio.Contains(myGameObject))
+            {
+                if (myGameObject.name == "Audio1" || myGameObject.name == "Audio2" || myGameObject.name == "Audio3" || myGameObject.name == "Audio4" || myGameObject.name == "Audio5" || myGameObject.name == "Audio6")
+                {
+                    listaBotonesAudio.Add(myGameObject);
                     Debug.Log(myGameObject.name);
                 }
             }
@@ -149,6 +164,37 @@ public class GalleryPicker : MonoBehaviour
 		
       
 	}*/
+
+
+    public void OpenAudioPanel()
+    {
+        
+            switch (EventSystem.current.currentSelectedGameObject.name)
+            {
+                case "Audio1":
+                    audioManager.audioNumber = 1;
+                    break;
+                case "Audio2":
+                    audioManager.audioNumber = 2;
+                    break;
+                case "Audio3":
+                    audioManager.audioNumber = 3;
+                    break;
+                case "Audio4":
+                    audioManager.audioNumber = 4;
+                    break;
+                case "Audio5":
+                    audioManager.audioNumber = 5;
+                    break;
+                case "Audio6":
+                    audioManager.audioNumber = 6;
+                    break;
+            }
+        
+        audioPanel.SetActive(true);
+       
+    }
+
     public void CerrarPanel(GameObject panel)
     {
         menu = false;
@@ -167,12 +213,18 @@ public class GalleryPicker : MonoBehaviour
                 obj.GetComponent<Image>().sprite = spriteAñadir;
                 obj.SetActive(true);
             }
+            foreach (GameObject obj in listaBotonesAudio)
+            {
+               // obj.GetComponent<Image>().sprite = spriteAñadir;
+                obj.SetActive(true);
+            }
+            
             start.SetActive(true);
     }
 
 
-
- //IEnumerator
+ 
+    //IEnumerator
     public IEnumerator GetInput()
     {
         if ((Input.touchCount > 0) && ( (Input.GetTouch(0).phase == TouchPhase.Began)))
@@ -216,13 +268,14 @@ public class GalleryPicker : MonoBehaviour
                 {
                     continuar = true;
                     foreach (GameObject obj in lista) { obj.SetActive(false); }
+                    foreach (GameObject obj in listaBotonesAudio) { obj.SetActive(false); }
                     start = hit.collider.gameObject;
                     hit.collider.gameObject.SetActive(false);
                     Debug.Log("conitnua"); 
                     yield return new WaitForSeconds(0.07f);
 
                 }
-                else if (hit.collider != null && !continuar)
+                else if (hit.collider != null && !continuar && audioPanel.activeInHierarchy==false)
                 {
                     Debug.Log("vez");
                     foreach (GameObject but in lista)
