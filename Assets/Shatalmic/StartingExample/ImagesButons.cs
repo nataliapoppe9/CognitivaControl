@@ -16,10 +16,13 @@ public class ImagesButons : MonoBehaviour
     public GameObject centerImg;
     public static List<Transform> listaPos = new List<Transform>();
     [SerializeField] GameObject spriteConnected,spriteOn;
-   // Transform posicionAnterior;
+    // Transform posicionAnterior;
     //public int pulsado=6;
     //[SerializeField] GameObject posicion;
 
+
+    public string ctrlAudio1 = "";
+    public string ctrlAudio2 = "";
     AudioManager audioManagerScript;
     [SerializeField] GameObject audioManagerGO;
     enum States
@@ -162,6 +165,7 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[0].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[0].clip;
+                        audioManagerGO.GetComponent<AudioSource>().Play();
                     }
                     foreach (GameObject img in lista)
                     {
@@ -179,12 +183,15 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[1].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[1].clip;
+                        if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
+                        
                     }
                     foreach (GameObject img in lista)
                     {
                         if (img.name == "Two")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                         }
                     }
                     centerImg.SetActive(true);
@@ -195,6 +202,7 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[2].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[2].clip;
+                        if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                     }
                     foreach (GameObject img in lista)
                     {
@@ -211,6 +219,7 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[3].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[3].clip;
+                        if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                     }
                     foreach (GameObject img in lista)
                     {
@@ -227,6 +236,7 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[4].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[4].clip;
+                        if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                     }
                     foreach (GameObject img in lista)
                     {
@@ -243,6 +253,7 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[5].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[5].clip;
+                        if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                     }
                     foreach (GameObject img in lista)
                     {
@@ -253,6 +264,7 @@ public class ImagesButons : MonoBehaviour
                     }
                     centerImg.SetActive(true);
                 }
+                else { return ; }
             }
 
         }
@@ -504,6 +516,13 @@ public class ImagesButons : MonoBehaviour
             uuid2 = FullUUID(uuid2);
 
         return (uuid1.ToUpper().Equals(uuid2.ToUpper()));
+    }
+
+    public bool MismoAudio(string texto)
+    {
+        if (texto==ctrlAudio1) { return true; }
+        else { ctrlAudio1 = texto; return false; }
+
     }
 }
 
