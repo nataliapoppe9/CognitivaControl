@@ -15,10 +15,13 @@ public class GalleryPicker : MonoBehaviour
     private bool menu = false;
     public bool continuar = false;
     [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, audioPanel;
-    [SerializeField] Sprite close, spriteAñadir;
+    [SerializeField] Sprite close, spriteAñadir, spriteAñadirAudio;
     [SerializeField] GameObject one, two, three, four, five, six, start;
 
+    public bool audioPanelOpen = true;
+    [SerializeField] Audio[] clipXcasillaG;
     AudioManager audioManager;
+    //public bool closedAudio = true;
 
     string nameSelected;
     bool controlA = true;
@@ -53,8 +56,10 @@ public class GalleryPicker : MonoBehaviour
 
     void Update()
     {
-       StartCoroutine(GetInput());
+        StartCoroutine(GetInput());
+        
     }
+
 
     public void PickImage(int maxSize, string imagenNomb)
     {
@@ -168,7 +173,11 @@ public class GalleryPicker : MonoBehaviour
 
     public void OpenAudioPanel()
     {
-        
+        foreach(GameObject but in lista)
+        {
+            but.GetComponent<Collider2D>().enabled = false;
+        }  
+        audioPanelOpen = true;
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
                 case "Audio1":
@@ -197,12 +206,16 @@ public class GalleryPicker : MonoBehaviour
 
     public void CerrarPanel(GameObject panel)
     {
-        menu = false;
-        panel.SetActive(false);
-        foreach(GameObject but in lista)
+        foreach (GameObject but in lista)
         {
             but.GetComponent<Collider2D>().enabled = true;
-        } 
+        }
+        menu = false;
+        panel.SetActive(false);
+        if (audioPanelOpen) { audioPanelOpen = false; }
+
+        if (audioManager.closeAudio && audioPanelOpen) { Debug.Log("cerrar panel Audio"); CerrarPanel(audioPanel); audioPanelOpen = false;  Debug.Log("closed"); }
+        
     }
 
     public void StartAgain()
@@ -215,8 +228,12 @@ public class GalleryPicker : MonoBehaviour
             }
             foreach (GameObject obj in listaBotonesAudio)
             {
-               // obj.GetComponent<Image>().sprite = spriteAñadir;
+                obj.GetComponent<Image>().sprite = spriteAñadirAudio;
                 obj.SetActive(true);
+            }
+            foreach(Audio audio in clipXcasillaG)
+            {
+            audio.clip = null;
             }
             
             start.SetActive(true);
@@ -275,14 +292,14 @@ public class GalleryPicker : MonoBehaviour
                     yield return new WaitForSeconds(0.07f);
 
                 }
-                else if (hit.collider != null && !continuar && audioPanel.activeInHierarchy==false)
+                else if (hit.collider != null && !continuar && !audioPanelOpen )
                 {
                     Debug.Log("vez");
                     foreach (GameObject but in lista)
                     {
                         but.GetComponent<Collider2D>().enabled = false;
                     }
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.07f);
                                       
                     nameSelected = hit.collider.name;
                     menu = true;

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 public class AudioManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class AudioManager : MonoBehaviour
     public int audioNumber;
     [SerializeField] GameObject panelAudio;
     [SerializeField] Sprite imagenAudioOk;
+    GalleryPicker galleryPicker;
+    public bool closeAudio = false;
 
  
     public void PlayWord()
@@ -30,14 +33,28 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    
+    private void Awake()
+    {
+        galleryPicker = FindObjectOfType<GalleryPicker>();
+    }
+
+    private void Update()
+    {
+        CheckCloseAudio();
+    }
+
+    void CheckCloseAudio()
+    {
+        if (!galleryPicker.audioPanelOpen && closeAudio) { closeAudio = false; }
+        
+    }
 
     public void SaveAudio()
     {
         GameObject s = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
         string audioName = s.GetComponent<TextMeshProUGUI>().text;
         Debug.Log(audioName);
-        
+        //galleryPicker = FindObjectOfType<GalleryPicker>();
 
         foreach (Audio audio in words)
         {
@@ -45,11 +62,13 @@ public class AudioManager : MonoBehaviour
             {
                 clipXcasilla[audioNumber-1].clip = audio.clip;
                 good[audioNumber-1].GetComponent<Image>().sprite = imagenAudioOk;
-                panelAudio.SetActive(false);
-                
+                //galleryPicker.CerrarPanel(panelAudio);
+                closeAudio = true;
             }
         }
 
     }
-    
+
+  
+
 }

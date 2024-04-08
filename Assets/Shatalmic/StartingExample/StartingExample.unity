@@ -964,7 +964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2660644877010454607, guid: 74bd18c95400a294cb1b165859eeedb5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -190.00006
+      value: -640
       objectReference: {fileID: 0}
     - target: {fileID: 2660644877010454607, guid: 74bd18c95400a294cb1b165859eeedb5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3098,6 +3098,8 @@ MonoBehaviour:
   centerImg: {fileID: 1165255725}
   spriteConnected: {fileID: 474577378}
   spriteOn: {fileID: 2723952444473498186, guid: ec1ef36b36a788e4699c55a60cf66e47, type: 3}
+  ctrlAudio1: 
+  ctrlAudio2: 
   audioManagerGO: {fileID: 137553671}
   StatusText: {fileID: 2135809778}
   PositionText: {fileID: 1676576401}
@@ -6879,6 +6881,7 @@ MonoBehaviour:
   audioPanel: {fileID: 326438968}
   close: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   "spriteA\xF1adir": {fileID: 21300000, guid: fd3d44ee6ea5f4d4c877dd3413dad12d, type: 3}
+  "spriteA\xF1adirAudio": {fileID: 21300000, guid: ae092fdfe65b1eb45807c7f6c222e239, type: 3}
   one: {fileID: 0}
   two: {fileID: 0}
   three: {fileID: 0}
@@ -6886,6 +6889,8 @@ MonoBehaviour:
   five: {fileID: 0}
   six: {fileID: 0}
   start: {fileID: 0}
+  audioPanelOpen: 0
+  clipXcasillaG: []
 --- !u!1 &1486771849 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5221286405558470139, guid: b3d95a6efcde71546a7e4a4783e2898b, type: 3}
@@ -7951,7 +7956,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1642951701}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1470762536}
+        m_TargetAssemblyTypeName: GalleryPicker, Assembly-CSharp
+        m_MethodName: CerrarPanel
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 326438968}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1642951701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10198,8 +10215,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8680071394763715707}
   m_HandleRect: {fileID: 3117474472838931618}
   m_Direction: 2
-  m_Value: 0.99471813
-  m_Size: 0.4498381
+  m_Value: 0.994555
+  m_Size: 0.44983813
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10277,8 +10294,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1417875162442521069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.547256}
-  m_AnchorMax: {x: 1, y: 0.9970941}
+  m_AnchorMin: {x: 0, y: 0.5471662}
+  m_AnchorMax: {x: 1, y: 0.9970044}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10480,7 +10497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.13700001, y: 0.037815027}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.5949707, y: 3.5961914}
+  m_AnchoredPosition: {x: 0.5949707, y: 3.7073975}
   m_SizeDelta: {x: -0.5950012, y: 701.93}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6029650733283739793
