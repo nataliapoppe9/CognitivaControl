@@ -36,18 +36,19 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         galleryPicker = FindObjectOfType<GalleryPicker>();
+        
     }
 
     private void Update()
     {
-        CheckCloseAudio();
+        //print(closeAudio + " " + galleryPicker.audioPanelOpen);
+        if (!galleryPicker.audioPanelOpen && closeAudio) { 
+            closeAudio = false; 
+            print("cierro panel"); }
+
     }
 
-    void CheckCloseAudio()
-    {
-        if (!galleryPicker.audioPanelOpen && closeAudio) { closeAudio = false; }
-        
-    }
+ //if (audioManager.closeAudio && audioPanelOpen) { Debug.Log("cerrar panel Audio"); CerrarPanel(audioPanel); audioPanelOpen = false;  Debug.Log("closed"); }
 
     public void SaveAudio()
     {

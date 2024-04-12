@@ -14,9 +14,13 @@ public class GalleryPicker : MonoBehaviour
     public static List<GameObject> listaBotonesAudio = new List<GameObject>();
     private bool menu = false;
     public bool continuar = false;
-    [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, audioPanel;
+    [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, audioPanel, mec;
     [SerializeField] Sprite close, spriteAñadir, spriteAñadirAudio;
     [SerializeField] GameObject one, two, three, four, five, six, start;
+    public bool holded=false;
+    float pressTime = 0;
+//    float endPressTime = 0;
+
 
     public bool audioPanelOpen = true;
     [SerializeField] Audio[] clipXcasillaG;
@@ -56,10 +60,68 @@ public class GalleryPicker : MonoBehaviour
 
     void Update()
     {
-        StartCoroutine(GetInput());
+        if (Input.touchCount > 0)
+        {
+            
+            /*if (Input.GetTouch(0).phase == TouchPhase.Stationary)
+            {
+                pressTime += Time.time;
+            }
+
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                endPressTime = Time.time - pressTime;
+
+                if (endPressTime < 0.5f)
+                {
+                    //Do something;
+                }
+                endPressTime = 0;
+            }*/
+
+
+            var touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    pressTime = 0;
+                    break;
+
+                case TouchPhase.Stationary:
+                    pressTime += Time.deltaTime;
+                    holded = true;
+                    break;
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    if (pressTime < 0.5f)
+                    {
+                        Debug.Log("Tap");//Do something;
+                        StartCoroutine(GetInput());
+                    }
+                    else { Debug.Log("Long Press Ended"); }
+                    pressTime = 0;
+                    break;
+            }
+
+        }
+
+
+       /* if ((Input.touchCount > 0) && ())
+        {
+            
+            Debug.Log("pulsación larga");
+            holded = true;
+
+        }*/
+
+       
+        if(audioManager.closeAudio) { CerrarPanel(audioPanel); }
         
     }
 
+ 
 
     public void PickImage(int maxSize, string imagenNomb)
     {
@@ -212,10 +274,7 @@ public class GalleryPicker : MonoBehaviour
         }
         menu = false;
         panel.SetActive(false);
-        if (audioPanelOpen) { audioPanelOpen = false; }
-
-        if (audioManager.closeAudio && audioPanelOpen) { Debug.Log("cerrar panel Audio"); CerrarPanel(audioPanel); audioPanelOpen = false;  Debug.Log("closed"); }
-        
+        if (audioPanelOpen) { audioPanelOpen = false; }       
     }
 
     public void StartAgain()
@@ -235,6 +294,7 @@ public class GalleryPicker : MonoBehaviour
             {
             audio.clip = null;
             }
+        mec.SetActive(true);
             
             start.SetActive(true);
     }
@@ -244,8 +304,8 @@ public class GalleryPicker : MonoBehaviour
     //IEnumerator
     public IEnumerator GetInput()
     {
-        if ((Input.touchCount > 0) && ( (Input.GetTouch(0).phase == TouchPhase.Began)))
-        {
+        
+        
             RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, -Vector2.up);
 
             if (menu)
@@ -272,7 +332,7 @@ public class GalleryPicker : MonoBehaviour
                     Debug.Log(hit.transform.name);
                     CerrarPanel(panelSelectImg);
                    
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.09f);
                 }
                 else if(hit.collider !=null && hit.collider.name.Contains("Close")&& controlA)
                 {
@@ -286,12 +346,14 @@ public class GalleryPicker : MonoBehaviour
                     continuar = true;
                     foreach (GameObject obj in lista) { obj.SetActive(false); }
                     foreach (GameObject obj in listaBotonesAudio) { obj.SetActive(false); }
+                    mec.SetActive(false);
                     start = hit.collider.gameObject;
                     hit.collider.gameObject.SetActive(false);
                     Debug.Log("conitnua"); 
                     yield return new WaitForSeconds(0.07f);
 
                 }
+                else if(hit.collider != null && !continuar && !audioPanelOpen && hit.collider.name == "NoRayCast") { Debug.Log("button"); }
                 else if (hit.collider != null && !continuar && !audioPanelOpen )
                 {
                     Debug.Log("vez");
@@ -308,7 +370,9 @@ public class GalleryPicker : MonoBehaviour
 
                 }
             }
-        }
+        
+
+       
      
     }
 }
