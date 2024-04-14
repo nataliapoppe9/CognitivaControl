@@ -48,8 +48,6 @@ public class AudioManager : MonoBehaviour
 
     }
 
- //if (audioManager.closeAudio && audioPanelOpen) { Debug.Log("cerrar panel Audio"); CerrarPanel(audioPanel); audioPanelOpen = false;  Debug.Log("closed"); }
-
     public void SaveAudio()
     {
         GameObject s = EventSystem.current.currentSelectedGameObject.transform.parent.gameObject;
@@ -63,7 +61,6 @@ public class AudioManager : MonoBehaviour
             {
                 clipXcasilla[audioNumber-1].clip = audio.clip;
                 good[audioNumber-1].GetComponent<Image>().sprite = imagenAudioOk;
-                //galleryPicker.CerrarPanel(panelAudio);
                 closeAudio = true;
             }
         }

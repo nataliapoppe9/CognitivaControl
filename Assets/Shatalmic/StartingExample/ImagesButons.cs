@@ -172,6 +172,7 @@ public class ImagesButons : MonoBehaviour
                         if (img.name == "One")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            centerImg.transform.rotation = img.transform.rotation;
                             centerImg.SetActive(true);
                         }
                     }

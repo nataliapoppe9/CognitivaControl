@@ -14,12 +14,14 @@ public class GalleryPicker : MonoBehaviour
     public static List<GameObject> listaBotonesAudio = new List<GameObject>();
     private bool menu = false;
     public bool continuar = false;
-    [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, audioPanel, mec;
+    [SerializeField] GameObject panelTurnOff, panelTurnOn, panelBase, panelSelectImg, audioPanel, mec, rrPanel;
     [SerializeField] Sprite close, spriteAñadir, spriteAñadirAudio;
     [SerializeField] GameObject one, two, three, four, five, six, start;
-    public bool holded=false;
+    //    float endPressTime = 0;
     float pressTime = 0;
-//    float endPressTime = 0;
+    string rrSelectedName;
+    bool panelRRactivo = false;
+   
 
 
     public bool audioPanelOpen = true;
@@ -63,23 +65,6 @@ public class GalleryPicker : MonoBehaviour
         if (Input.touchCount > 0)
         {
             
-            /*if (Input.GetTouch(0).phase == TouchPhase.Stationary)
-            {
-                pressTime += Time.time;
-            }
-
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                endPressTime = Time.time - pressTime;
-
-                if (endPressTime < 0.5f)
-                {
-                    //Do something;
-                }
-                endPressTime = 0;
-            }*/
-
-
             var touch = Input.GetTouch(0);
 
             switch (touch.phase)
@@ -90,17 +75,29 @@ public class GalleryPicker : MonoBehaviour
 
                 case TouchPhase.Stationary:
                     pressTime += Time.deltaTime;
-                    holded = true;
                     break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     if (pressTime < 0.5f)
                     {
-                        Debug.Log("Tap");//Do something;
-                        StartCoroutine(GetInput());
+                        Debug.Log("Tap");
+                        if(!panelRRactivo) StartCoroutine(GetInput());
                     }
-                    else { Debug.Log("Long Press Ended"); }
+                    else 
+                    {
+                        RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, -Vector2.up);
+                        if (!menu && !audioPanelOpen && hit.collider.name!="RayCastHit") 
+                        {
+                            
+                            Debug.Log(hit.collider.name);
+                            rrSelectedName = hit.collider.name;
+
+                            Debug.Log("Long Press Ended");
+                            rrPanel.SetActive(true);
+                            panelRRactivo = true;
+                        }
+                    }
                     pressTime = 0;
                     break;
             }
@@ -108,20 +105,38 @@ public class GalleryPicker : MonoBehaviour
         }
 
 
-       /* if ((Input.touchCount > 0) && ())
-        {
-            
-            Debug.Log("pulsación larga");
-            holded = true;
-
-        }*/
-
        
         if(audioManager.closeAudio) { CerrarPanel(audioPanel); }
         
     }
 
- 
+
+    public void RemoveImg()
+    {
+        foreach (GameObject img in lista)
+        {
+            if (rrSelectedName == img.name)
+            {
+
+                img.GetComponent<Image>().sprite = spriteAñadir; ;
+            }
+        }
+        
+        CerrarPanel(rrPanel);
+    }
+
+    public void RotateImg()
+    {
+        foreach (GameObject img in lista)
+        {
+            if (rrSelectedName == img.name)
+            {
+
+                img.transform.Rotate(0.0f, 0.0f, -90.0f, Space.Self);
+
+            }
+        }
+    }
 
     public void PickImage(int maxSize, string imagenNomb)
     {
@@ -235,11 +250,15 @@ public class GalleryPicker : MonoBehaviour
 
     public void OpenAudioPanel()
     {
-        foreach(GameObject but in lista)
+        if (!panelRRactivo)
         {
-            but.GetComponent<Collider2D>().enabled = false;
-        }  
-        audioPanelOpen = true;
+            foreach (GameObject but in lista)
+            {
+                but.GetComponent<Collider2D>().enabled = false;
+            }
+            audioPanelOpen = true;
+            //for(int i =0,........ 
+            //Se puede optimizar
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
                 case "Audio1":
@@ -261,9 +280,9 @@ public class GalleryPicker : MonoBehaviour
                     audioManager.audioNumber = 6;
                     break;
             }
-        
-        audioPanel.SetActive(true);
-       
+
+            audioPanel.SetActive(true);
+        }
     }
 
     public void CerrarPanel(GameObject panel)
@@ -272,7 +291,8 @@ public class GalleryPicker : MonoBehaviour
         {
             but.GetComponent<Collider2D>().enabled = true;
         }
-        menu = false;
+        if (panelRRactivo) { rrPanel.SetActive(false); panelRRactivo = false; }
+        if(menu) menu = false;
         panel.SetActive(false);
         if (audioPanelOpen) { audioPanelOpen = false; }       
     }
@@ -283,6 +303,7 @@ public class GalleryPicker : MonoBehaviour
             foreach (GameObject obj in lista)
             {
                 obj.GetComponent<Image>().sprite = spriteAñadir;
+            obj.transform.rotation = Quaternion.identity;
                 obj.SetActive(true);
             }
             foreach (GameObject obj in listaBotonesAudio)
@@ -294,8 +315,7 @@ public class GalleryPicker : MonoBehaviour
             {
             audio.clip = null;
             }
-        mec.SetActive(true);
-            
+            mec.SetActive(true);
             start.SetActive(true);
     }
 
@@ -308,6 +328,8 @@ public class GalleryPicker : MonoBehaviour
         
             RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, -Vector2.up);
 
+
+
             if (menu)
             {
                 if (hit.collider != null && hit.collider.name.Contains("Image")) {
@@ -318,6 +340,7 @@ public class GalleryPicker : MonoBehaviour
                         {
                             // Debug.Log(but.name + " " + nameSelected);
                             but.GetComponent<Image>().sprite = hit.collider.GetComponent<Image>().sprite;
+                            but.transform.rotation = hit.collider.transform.rotation;
                         }
                     }
                     yield return new WaitForSeconds(0.09f);
