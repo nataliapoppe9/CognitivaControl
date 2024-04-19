@@ -165,7 +165,7 @@ public class ImagesButons : MonoBehaviour
                     if (audioManagerScript.clipXcasilla[0].clip != null)
                     {
                         audioManagerGO.GetComponent<AudioSource>().clip = audioManagerScript.clipXcasilla[0].clip;
-                        audioManagerGO.GetComponent<AudioSource>().Play();
+                        if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                     }
                     foreach (GameObject img in lista)
                     {
@@ -173,10 +173,9 @@ public class ImagesButons : MonoBehaviour
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
                             centerImg.transform.rotation = img.transform.rotation;
-                            centerImg.SetActive(true);
                         }
                     }
-
+                    centerImg.SetActive(true);
                 }
                 if (texto == " 010000")
                 {
@@ -192,7 +191,8 @@ public class ImagesButons : MonoBehaviour
                         if (img.name == "Two")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
-                            if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
+                            centerImg.transform.rotation = img.transform.rotation;
+                            // if (!MismoAudio(texto)) { audioManagerGO.GetComponent<AudioSource>().Play(); }
                         }
                     }
                     centerImg.SetActive(true);
@@ -210,6 +210,7 @@ public class ImagesButons : MonoBehaviour
                         if (img.name == "Three")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            centerImg.transform.rotation = img.transform.rotation;
                         }
                     }
                     centerImg.SetActive(true);
@@ -227,6 +228,7 @@ public class ImagesButons : MonoBehaviour
                         if (img.name == "Four")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            centerImg.transform.rotation = img.transform.rotation;
                         }
                     }
                     centerImg.SetActive(true);
@@ -244,6 +246,7 @@ public class ImagesButons : MonoBehaviour
                         if (img.name == "Five")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            centerImg.transform.rotation = img.transform.rotation;
                         }
                     }
                     centerImg.SetActive(true);
@@ -261,6 +264,7 @@ public class ImagesButons : MonoBehaviour
                         if (img.name == "Six")
                         {
                             centerImg.GetComponent<Image>().sprite = img.GetComponent<Image>().sprite;
+                            centerImg.transform.rotation = img.transform.rotation;
                         }
                     }
                     centerImg.SetActive(true);

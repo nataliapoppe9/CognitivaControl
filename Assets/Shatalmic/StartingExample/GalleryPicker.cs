@@ -37,6 +37,7 @@ public class GalleryPicker : MonoBehaviour
     {
         GameObject[] prueba = FindObjectsOfType<GameObject>();
         audioManager = FindAnyObjectByType<AudioManager>();
+        instance = FindAnyObjectByType<ImagesButons>();
      
         foreach (GameObject myGameObject in prueba)
         {
@@ -79,12 +80,12 @@ public class GalleryPicker : MonoBehaviour
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
-                    if (pressTime < 0.5f)
+                    if (pressTime < 0.1f)
                     {
-                        Debug.Log("Tap");
+                        Debug.Log("Tap. ");
                         if(!panelRRactivo) StartCoroutine(GetInput());
                     }
-                    else 
+                    else if(pressTime > 0.4f)
                     {
                         RaycastHit2D hit = Physics2D.Raycast(Input.GetTouch(0).position, -Vector2.up);
                         if (!menu && !audioPanelOpen && hit.collider.name!="RayCastHit") 
@@ -298,12 +299,14 @@ public class GalleryPicker : MonoBehaviour
     }
 
     public void StartAgain()
-    {   
+    {
+        if (!instance.centerImg.activeInHierarchy)
+        {
             continuar = false;
             foreach (GameObject obj in lista)
             {
                 obj.GetComponent<Image>().sprite = spriteAñadir;
-            obj.transform.rotation = Quaternion.identity;
+                obj.transform.rotation = Quaternion.identity;
                 obj.SetActive(true);
             }
             foreach (GameObject obj in listaBotonesAudio)
@@ -311,12 +314,14 @@ public class GalleryPicker : MonoBehaviour
                 obj.GetComponent<Image>().sprite = spriteAñadirAudio;
                 obj.SetActive(true);
             }
-            foreach(Audio audio in clipXcasillaG)
+            foreach (Audio audio in clipXcasillaG)
             {
-            audio.clip = null;
+                audio.clip = null;
             }
             mec.SetActive(true);
             start.SetActive(true);
+        }
+        Debug.Log(!instance.centerImg.activeInHierarchy);
     }
 
 
